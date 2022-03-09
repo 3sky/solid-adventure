@@ -1,0 +1,17 @@
+kind: pipeline
+name: default
+
+steps:
+- name: tag
+  image: golang
+  commands:
+    - git rev-parse --short HEAD > .tags
+
+- name: docker
+  image: plugins/docker
+  settings:
+    repo: 3sky/go-http
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
