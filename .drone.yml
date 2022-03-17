@@ -10,6 +10,13 @@ steps:
   commands:
     - git rev-parse --short HEAD > .tags
 
+- name: scan the files
+  image: aquasec/trivy:0.24.3
+  commands:
+    - ls -la
+    - trivy fs --security-checks vuln,config ./
+    - trivy config ./
+
 - name: docker
   image: plugins/docker
   settings:
@@ -18,3 +25,9 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
+
+
+- name: scan the image
+  image: aquasec/trivy:0.24.3
+  commands:
+    - trivy config 3sky/go-http:$(git rev-parse --short HEAD)
