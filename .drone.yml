@@ -14,8 +14,8 @@ steps:
   image: aquasec/trivy:0.24.3
   commands:
     - ls -la
-    - trivy fs --security-checks vuln,config ./
-    - trivy config ./
+    - trivy fs --exit-code 1 --security-checks vuln,config ./
+    - trivy config --exit-code 1 ./
 
 - name: docker
   image: plugins/docker
@@ -30,4 +30,4 @@ steps:
 - name: scan the image
   image: aquasec/trivy:0.24.3
   commands:
-    - trivy config 3sky/go-http:$(git rev-parse --short HEAD)
+    - trivy image --exit-code 1 3sky/go-http:$(git rev-parse --short HEAD)
