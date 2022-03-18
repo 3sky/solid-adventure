@@ -15,8 +15,9 @@ steps:
   volume:
       - /var/run/docker.sock:/var/run/docker.sock
   commands:
-    - ls -la
-    - docker-compose version
+    - systemctl status docker
+    - docker ps
+    - docker-compose up
     - sleep 20
     - docker-compose logs
     - docker-compose stop
