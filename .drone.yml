@@ -12,6 +12,8 @@ steps:
 
 - name: compose tests
   image: docker/compose:1.29.2
+  volume:
+      - /var/run/docker.sock:/var/run/docker.sock
   commands:
     - docker-compose up -d
     - sleep 20
