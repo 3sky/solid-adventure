@@ -17,7 +17,7 @@ steps:
       path: /var/run/docker.sock
   commands:
     - docker ps
-    - docker-compose up
+    - docker-compose up -d
     - sleep 20
     - docker-compose logs
     - docker-compose stop

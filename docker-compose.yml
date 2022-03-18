@@ -7,6 +7,6 @@ services:
      - "8080:8080"
   alpine:
     image: alpine/curl:3.14
-    command: curl -vik localhost:8080
+    command: curl -S -I web:8080
     depends_on:
       - "web"
