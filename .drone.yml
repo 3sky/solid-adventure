@@ -10,10 +10,17 @@ steps:
   commands:
     - git rev-parse --short HEAD > .tags
 
+- name: compose tests
+  image: docker/compose:1.29.2
+  commands:
+    - docker-compose up -d
+    - sleep 20
+    - docker-compose logs
+    - docker-compose stop
+
 - name: scan the files
   image: aquasec/trivy:0.24.3
   commands:
-    - ls -la
     - trivy fs --exit-code 1 --security-checks vuln,config ./
     - trivy config --exit-code 1 ./
 
