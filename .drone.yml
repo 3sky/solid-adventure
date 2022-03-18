@@ -1,5 +1,5 @@
 kind: pipeline
-name: default
+name: Awesome pipeline
 platform:
   os: linux
   arch: amd64
@@ -12,8 +12,9 @@ steps:
 
 - name: compose tests
   image: docker/compose:1.29.2
-  volume:
-      - /var/run/docker.sock:/var/run/docker.sock
+  volumes:
+    - name: docker_socket
+      path: /var/run/docker.sock
   commands:
     - docker ps
     - docker-compose up
@@ -41,3 +42,9 @@ steps:
   image: aquasec/trivy:0.24.3
   commands:
     - trivy image --exit-code 1 3sky/go-http:$(git rev-parse --short HEAD)
+
+
+volumes:
+  - name: docker_socket
+    host:
+      path: /var/run/docker.sock
